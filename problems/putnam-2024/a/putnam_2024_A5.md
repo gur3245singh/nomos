@@ -1,0 +1,1 @@
+Consider a circle $\Omega$ with radius $9$ and center at the origin $(0,0)$, and a disc $\Delta$ with radius $1$ and center at $(r,0)$, where $0 \le r \le 8$. Two points $P$ and $Q$ are chosen independently and uniformly at random on $\Omega$. Which value(s) of $r$ minimize the probability that the chord $PQ$ intersects $\Delta$?

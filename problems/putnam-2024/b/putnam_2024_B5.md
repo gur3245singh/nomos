@@ -1,0 +1,1 @@
+Let $k$ and $m$ be positive integers. For a positive integer $n$, let $f(n)$ be the number of integer sequences $x_1, \ldots, x_k, y_1, \ldots, y_m, z$ satisfying $1 \le x_1 \le \cdots \le x_k \le z \le n$ and $1 \le y_1 \le \cdots \le y_m \le z \le n$. Show that $f(n)$ can be expressed as a polynomial in $n$ with nonnegative coefficients.
